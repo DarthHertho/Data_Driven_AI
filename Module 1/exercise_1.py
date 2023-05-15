@@ -1,3 +1,5 @@
+import random
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -76,49 +78,104 @@ def histogram_1():
     # plt.hist(cat2.ravel(),bins=240, range=(40,250), density=True, label="gray cat",alpha=0.7)
     # plt.legend(loc="upper right")
     # plt.show()
-histogram_1()
 
 def pie_1():
     data = pd.read_csv("adult.data")
     data["Native-country"].value_counts().plot(kind = "pie")
     plt.show()
 
-pie_1()
+
 
 def box_plot_1():
     data = pd.read_csv("adult.data")
     plt.boxplot(data["Age"])
     plt.show()
-box_plot_1()
+
 
 def missing_values():
     data = pd.read_csv("adult.data")
     missing = data[data.eq("?")].count()
     print(missing)
 
-missing_values()
+
 
 def replace_missing_save():
     data = pd.read_csv("adult.data")
-    data = data.replace(to_replace="?", value= np.nan)
+    print(f"count before replace: {data[data.eq('?')].count()}")
+    df1 = data.replace(to_replace="?", value= np.nan)
+    print(f"count after replace: {data[data.eq('?')].count()}")
     # df = pd.read_csv('adult.data', na_values='?')
     # print('? values: ', df[df.eq("?")].count().sum())
     # print('nan values: ', df.isna().sum().sum())
-    print('? values: ', data[data.eq("?")].count().sum())
-    print('nan values: ', data.isna().sum().sum())
-    df2 = data.copy()
+    print('? values: ', df1[df1.eq("?")].count().sum())
+    print('nan values: ', df1.isna().sum().sum())
+
+    df2 = df1.copy()
     df2.dropna(inplace=True)
     df2.to_csv("dropped_values.csv", encoding='utf-8', index=False)
 
 
-replace_missing_save()
+
+# def repl1():
+#     data = pd.read_csv("adult.data")
+#     data = data.replace(to_replace="?", value=_np.nan)
+#     data = data.dropna()
+#     data.to_csv("dropped_values.csv", encoding='utf-8', index=False)
+#
+#
+# def repl2():
+#     data = pd.read_csv("adult.data")
+#     data.replace(to_replace="?", value=_np.nan, inplace=True)
+#     data.dropna(inplace=True)
+#     data.to_csv("dropped_values.csv", encoding='utf-8', index=False)
+#
+#
+# def repl3():
+#     data = pd.read_csv("adult.data")
+#     df1 = data.replace(to_replace="?", value=_np.nan)
+#     df2 = df1.dropna()
+#     df2.to_csv("dropped_values.csv", encoding='utf-8', index=False)
+
+
 
 def mean_replacement_save():
     data = pd.read_csv("adult.data")
-    df1=data.apply(lambda x:x.fillna(x.value_counts().index[0])) # most frequent, for non-numeric values
+    # print("----------------------- data ---------------------------")
+    # print(data)
+    # print("--------------------------------------------------")
+    #
+    # def geenlambda(x:pd.Series):
+    #     # print("==========================")
+    #     # print(f"geenlambda({x.name})")
+    #     #
+    #     # vc = x.value_counts()
+    #     # print(f"vc: type={type(vc)} waarde={vc}")
+    #     #
+    #     # linksboven = vc.index[0]
+    #     # print(f"linksboven: type={type(linksboven)} waarde={linksboven}")
+    #     #
+    #     # nan_gevuld_maar_met_watdan = x.fillna(linksboven)
+    #     # return nan_gevuld_maar_met_watdan  # most frequent, for non-numeric values
 
+    # df1 = data.apply(geenlambda)
+    df1 = data.apply(lambda x: x.fillna(x.value_counts().index[0]))
+
+    print("--------------------------------------------------")
+    print(df1)
     df1.to_csv("filled_values.csv", encoding='utf-8', index=False)
     return
 
-mean_replacement_save()
 
+
+def main():
+    histogram_1()
+
+    pie_1()
+
+    box_plot_1()
+
+    missing_values()
+
+    replace_missing_save()
+
+    mean_replacement_save()
