@@ -69,6 +69,7 @@ def exercise_1_lrm():
     plt.scatter(x_test, y_test, color="black")
     plt.plot(x_test, y_pred, color="blue", linewidth=3)
 
+    plt.show()
 
     x = data[['sepal_length', 'sepal_width', 'petal_length', 'petal_width']]
     y = label_binarize(data[['class']], classes=['Iris-setosa', 'Iris-versicolor', 'Iris-virginica'])
@@ -161,8 +162,8 @@ def exercise_2_dtm():
 def main():
     # exercise_1_hist()
     # exercise_1_scatter()
-    # exercise_1_lrm()
-    exercise_2_dtm()
+    exercise_1_lrm()
+    # exercise_2_dtm()
 
 
 main()
